@@ -1,6 +1,26 @@
 
 ---
 
+PROPER POSTGRES SPIN (WHAT YOU SHOULD USE)
+
+docker run -d
+--name postgres-container
+-e POSTGRES_USER=myuser
+-e POSTGRES_PASSWORD=mypass
+-e POSTGRES_DB=mydb
+-p 5432:5432
+-v pgdata:/var/lib/postgresql/data
+postgres:latest
+
+This does EVERYTHING:
+Creates container
+Initializes DB
+Creates user
+Creates database
+Mounts volume
+Exposes port
+Runs in background
+
 PSQL QUICK NOTES [[RELATIONAL-DATABASE]]
 
 WHAT PSQL IS  
