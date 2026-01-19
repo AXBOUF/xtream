@@ -8,3 +8,7 @@ web api ---> DB --> CSV --> visualization --> search tools --> sns
 Try using must import data and make visualization and automate a aworking macromatix format and a search tab for daily report. 
 
 Over all a macromatix format.
+
+need to recap data modelling and schema 
+
+maintain a simple first principle 
