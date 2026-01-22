@@ -21,3 +21,6 @@ pip install ---
 pip freeze > requirements.txt
 
 ```
+```sh 
+#!/usr/bin/env bash 
+```
