@@ -24,3 +24,26 @@ pip freeze > requirements.txt
 ```sh 
 #!/usr/bin/env bash 
 ```
+
+
+Recommended approach
+
+Use absolute paths in modular scripts if the folder location is fixed.
+
+If you want to make it flexible, pass the folder as a script argument:
+
+```sh
+#!/usr/bin/env bash
+
+BASE_DIR="$1"
+
+if [[ -z "$BASE_DIR" ]]; then
+  echo "Usage: $0 /path/to/dataschema"
+  exit 1
+fi
+
+# ...rest of the script...
+
+./organise_by_month "/workspaces/xtream/project0/dataschema"
+
+```
