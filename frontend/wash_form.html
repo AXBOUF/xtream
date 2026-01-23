@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Car Wash Record - Xtream Wash</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .alert.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .alert.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .info-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 3px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .service-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #667eea;
+            color: white;
+            border-radius: 3px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: #667eea;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚗 Xtream Wash</h1>
+            <p>Daily Car Wash Record</p>
+        </div>
+
+        <div class="info-box">
+            <strong>Note:</strong> All fields marked with <span class="required">*</span> are required. Records are submitted to our system in real-time.
+        </div>
+
+        <div id="alert" class="alert"></div>
+
+        <form id="washForm">
+            <!-- Customer Information Section -->
+            <fieldset>
+                <legend style="display: none;">Customer Information</legend>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="phone" name="phone" placeholder="+628100000001" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerName">Customer Name</label>
+                        <input type="text" id="customerName" name="customerName" placeholder="Optional">
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Service Details Section -->
+            <fieldset>
+                <legend style="display: none;">Service Details</legend>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="washType">Service Type <span class="required">*</span></label>
+                        <select id="washType" name="washType" required>
+                            <option value="">-- Select Service --</option>
+                            <option value="handpolish">Hand Polish - $10.00</option>
+                            <option value="xtream" selected>Xtream Wash - $15.00</option>
+                            <option value="deluxe">Deluxe Premium - $20.00</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="paymentMethod">Payment Method <span class="required">*</span></label>
+                        <select id="paymentMethod" name="paymentMethod" required>
+                            <option value="">-- Select Method --</option>
+                            <option value="cash" selected>Cash</option>
+                            <option value="card">Card</option>
+                            <option value="transfer">Bank Transfer</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Additional Details Section -->
+            <fieldset>
+                <legend style="display: none;">Additional Details</legend>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="operatorName">Operator Name</label>
+                        <input type="text" id="operatorName" name="operatorName" placeholder="e.g., Hendra, Joko">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vehiclePlate">Vehicle Plate</label>
+                        <input type="text" id="vehiclePlate" name="vehiclePlate" placeholder="e.g., B1234ABC">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="discount">Discount Applied ($)</label>
+                    <input type="number" id="discount" name="discount" min="0" step="0.01" placeholder="0.00">
+                </div>
+
+                <div class="form-group full">
+                    <label for="comments">Comments / Notes</label>
+                    <textarea id="comments" name="comments" placeholder="Any additional notes..."></textarea>
+                </div>
+            </fieldset>
+
+            <!-- Submit Button -->
+            <button type="submit">
+                <span class="loading" id="loading">
+                    <div class="spinner"></div>
+                    Submitting...
+                </span>
+                <span id="submitText">Submit Record</span>
+            </button>
+        </form>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8000/api/orders';
+
+        const form = document.getElementById('washForm');
+        const alertBox = document.getElementById('alert');
+        const loading = document.getElementById('loading');
+        const submitText = document.getElementById('submitText');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Disable button and show loading
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            loading.style.display = 'inline';
+            submitText.style.display = 'none';
+
+            // Collect form data
+            const formData = {
+                phone_number: document.getElementById('phone').value,
+                customer_name: document.getElementById('customerName').value || null,
+                wash_type: document.getElementById('washType').value,
+                operator_name: document.getElementById('operatorName').value || null,
+                vehicle_plate: document.getElementById('vehiclePlate').value || null,
+                payment_method: document.getElementById('paymentMethod').value,
+                discount_applied: parseFloat(document.getElementById('discount').value) || 0,
+                comments: document.getElementById('comments').value || null
+            };
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Failed to submit order');
+                }
+
+                const result = await response.json();
+
+                // Show success message
+                alertBox.className = 'alert success';
+                alertBox.innerHTML = `
+                    <strong>✓ Success!</strong> Order #${result.id} has been submitted.
+                    Customer: ${formData.customer_name || formData.phone_number} | 
+                    Service: ${formData.wash_type} | 
+                    Price: $${formData.discount_applied > 0 ? 'adjusted' : 'standard'}
+                `;
+
+                // Reset form
+                form.reset();
+
+                // Auto-hide alert after 5 seconds
+                setTimeout(() => {
+                    alertBox.style.display = 'none';
+                }, 5000);
+
+            } catch (error) {
+                // Show error message
+                alertBox.className = 'alert error';
+                alertBox.innerHTML = `<strong>✗ Error:</strong> ${error.message}`;
+                console.error('Form submission error:', error);
+
+            } finally {
+                // Re-enable button and hide loading
+                submitBtn.disabled = false;
+                loading.style.display = 'none';
+                submitText.style.display = 'inline';
+            }
+        });
+
+        // Real-time phone validation
+        document.getElementById('phone').addEventListener('change', (e) => {
+            const phone = e.target.value.trim();
+            if (phone && !/^[\+\d\s\-\(\)]{5,}$/.test(phone)) {
+                alertBox.className = 'alert error';
+                alertBox.innerHTML = '<strong>Invalid phone format:</strong> Please enter a valid phone number.';
+            } else {
+                alertBox.style.display = 'none';
+            }
+        });
+
+        // Show price when service type changes
+        document.getElementById('washType').addEventListener('change', (e) => {
+            const prices = {
+                'handpolish': '$10.00',
+                'xtream': '$15.00',
+                'deluxe': '$20.00'
+            };
+            // Could add visual feedback here
+        });
+
+        console.log('Car Wash Form loaded. API endpoint:', API_URL);
+    </script>
+</body>
+</html>
