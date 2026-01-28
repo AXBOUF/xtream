@@ -16,7 +16,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Configuration
-API_URL = os.getenv('FRONTEND_API_URL', 'http://localhost:8000/api')
+API_URL = os.getenv('BACKEND_URL', 'http://localhost:8000/api')
 REFRESH_INTERVAL = 10  # seconds
 
 # ============================================================================

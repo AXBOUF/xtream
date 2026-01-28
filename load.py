@@ -9,19 +9,20 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Database connection with environment variables
+
 DB_CONFIG = {
-    'host': os.getenv('DB_HOST', 'localhost'),
+    'host': os.getenv('DB_HOST', 'postgres'),
     'database': os.getenv('DB_NAME', 'washdata_db'),
     'user': os.getenv('DB_USER', 'postgres'),
     'password': os.getenv('DB_PASSWORD', 'postgres'),
     'port': os.getenv('DB_PORT', 5432)
 }
 
-BASE_DIR = "/workspaces/xtream/project0/dataschema"
+BASE_DIR = "/app/project0/dataschema"
 MONTHS = ["January", "February", "March", "April", "May", "June", 
           "July", "August", "September", "October", "November", "December"]
 
-def load_schema_from_sql(conn):
+def #load_schema_from_sql(conn):
     """Load the consolidated schema from dailyreport.sql"""
     schema_file = os.path.join(BASE_DIR, "dailyreport.sql")
     
@@ -153,7 +154,7 @@ def main():
         print("✅ Connected to database")
         
         # Load unified schema
-        load_schema_from_sql(conn)
+        #load_schema_from_sql(conn)
         
         # Migrate all historical Excel data
         migrate_all_months(conn)
