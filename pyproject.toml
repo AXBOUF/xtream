@@ -1,0 +1,11 @@
+[project]
+name = "xtream"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "ipykernel>=7.2.0",
+    "jupyter>=1.1.1",
+    "pip>=26.0.1",
+]
