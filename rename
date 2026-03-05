@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+for dir in 2022/*/; do 
+    base=$(basename "$dir")
+    new_name="${base##* }"
+    mv "$dir" "2022/$new_name"
+done

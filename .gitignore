@@ -1,3 +1,8 @@
 .venv
 data/
 2022/
+
+pycache/
+__pycache__/
+*.log
+*.ipynb_checkpoints
